@@ -1,0 +1,16 @@
+                            <% for(var y = 0; y < UserList.length; y++) { %>
+                                <% if( y % 2 ) { %>
+                                    <tr class="odd pointer">
+                                <% } else { %>
+                                    <tr class="even pointer">
+                                <% } %>
+
+                                <% var userObject = UserList[y]; %>
+                                <% var userKeys = Object.keys(userObject); %>
+
+                                <% for(var x = 0; x < userKeys.length; x++) { %>
+                                    <td class=" "><%= userObject[userKeys[x]] %> </td>
+                                <% } %>
+
+                                <td class=" last"><a href="/collection/users/<%= encodeURIComponent(userObject['uid']) %>">View/Edit</a>
+                            <% } %>

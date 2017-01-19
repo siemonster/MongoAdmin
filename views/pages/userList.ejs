@@ -1,0 +1,172 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <% include ../partials/head %>
+
+    <script type="text/javascript">
+
+        $(window).load(function(){
+
+          checkLogin();
+
+          loadUserList();
+
+          loadUserName(function(username) {
+
+            $("#username1").html(username);
+            $("#username2").html(username);
+          });
+        });
+
+        function loadUserList() {
+
+          mongoSitesApi.auth_users()
+            .then(function(users) {
+
+                $.post("/formatter/userListTable", { allUsers: JSON.stringify( users ) }, function(result) {
+
+                  $('#tableBody').html(result);
+                });
+            });
+        }
+
+        function createUser(email, password) {
+
+          mongoSitesApi.auth_register({_id: "cteel@pocketwatchllc.com", password: "test password"})
+                .then(function(result) {
+
+                  console.log('a');
+                  console.log(result);
+                    window.location.href = "/collection/users/" + encodeURIComponent(email);
+                })
+                .catch(function(error) {
+
+                  console.log('b');
+                  console.log(error);
+                });
+        }
+
+    </script>
+
+  </head>
+  <body class="nav-md footer_fixed">
+    <div class="container body">
+      <div class="main_container">
+        <% include ../partials/leftMenu %>
+        <% include ../partials/topNav %>
+
+        <!-- page content -->
+        <div class="right_col" role="main">
+          <div class="">
+            <div class="page-title">
+              <div class="title_left">
+                <h3>Users</h3>
+              </div>
+            </div>
+
+            <div class="clearfix"></div>
+
+            <div class="row">
+              <div class="col-md-12 col-sm-12 col-xs-12">
+                <div class="x_panel">
+
+                  <div class="x_content">
+
+                                      <form id="demo-form2" data-parsley-validate class="form-horizontal form-label-left">
+
+
+                                        <button type="button" class="btn btn-primary" data-toggle="modal" data-target=".bs-createUser-modal-lg">Create User</button>
+
+                                        <div class="modal fade bs-createUser-modal-lg" tabindex="-1" role="dialog" aria-hidden="true">
+                                        <div class="modal-dialog modal-lg">
+                                            <div class="modal-content">
+
+                                            <div class="modal-header">
+                                                <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">×</span>
+                                                </button>
+                                                <h4 class="modal-title" id="myModalLabel">Create User</h4>
+                                            </div>
+                                            <div class="modal-body">
+                                                <div class="form-group">
+                                                    <label class="control-label col-md-3 col-sm-3 col-xs-12" for="createUser-Email">Email </label>
+                                                    <div class="col-md-6 col-sm-6 col-xs-12">
+                                                        <input id="createUser-Email" class="form-control col-md-7 col-xs-12" type="text" name="createUser-Email" >
+                                                    </div>
+                                                </div>
+                                                <div class="form-group">
+                                                    <label class="control-label col-md-3 col-sm-3 col-xs-12" for="createUser-Password">Password </label>
+                                                    <div class="col-md-6 col-sm-6 col-xs-12">
+                                                        <input id="createUser-Password" class="form-control col-md-7 col-xs-12" type="text" name="createUser-Password" >
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="modal-footer">
+                                                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                                                <button id="createUser-Btn" type="button" class="btn btn-primary">Create User</button>
+
+                                                <script>
+
+                                                $('#createUser-Btn').click(function() {
+
+                                                  createUser($('#createUser-Email').val(), $('#createUser-Password').val());
+/*
+                                                  $.post("/collection/users/", { email: $('#createUser-Email').val(), password: $('#createUser-Password').val() }, function(result) {
+
+                                                    if(result == "success") {
+
+                                                      window.location.href = "/collection/users/" + encodeURIComponent($('#createUser-Email').val());
+                                                    }
+                                                    else if (result == "exists") {
+
+                                                        new PNotify({
+                                                            title: 'User Exists',
+                                                            text: $('#createUser-Email').val() + ' already exists.',
+                                                            type: 'error',
+                                                            styling: 'bootstrap3'
+                                                        });
+                                                    }
+                                                  });
+                                                  */
+                                                });
+
+
+                                                </script>
+                                            </div>
+
+                                            </div>
+                                        </div>
+                                        </div>
+                                    </form>
+
+
+
+                    <div class="table-responsive">
+                      <table class="table table-striped jambo_table bulk_action">
+                        <thead>
+                          <tr class="headings">
+                            <% for(var i = 0; i < Columns.length; i++) { %>
+                                <th class="column-title"><%= Columns[i] %> </th>
+                            <% } %>
+                            <th class="column-title no-link last"><span class="nobr">Action</span>
+                          </tr>
+                        </thead>
+
+                        <tbody id="tableBody">
+
+                        </tbody>
+                      </table>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+
+        <% include ../partials/footer %>
+      </div>
+    </div>
+    <% include ../partials/tail %>
+  </body>
+</html>

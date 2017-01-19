@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <% include ../partials/head %>
+
+    <script type="text/javascript">
+    function getParameterByName(name, url) {
+        if (!url) {
+        url = window.location.href;
+        }
+        name = name.replace(/[\[\]]/g, "\\$&");
+        var regex = new RegExp("[?&]" + name + "(=([^&#]*)|&|#|$)"),
+            results = regex.exec(url);
+        if (!results) return null;
+        if (!results[2]) return '';
+        return decodeURIComponent(results[2].replace(/\+/g, " "));
+    }
+
+    $(document).ready(function() {
+
+        $("form").submit(function(e){
+            e.preventDefault(e);
+        });
+    });
+
+    $(window).load(function(){
+
+        checkLogin();
+
+        loadUserData(function() {
+
+            if(getParameterByName('dash') != undefined) {
+
+                console.log()
+
+                $('#' + getParameterByName('dash')).modal('show');
+            }
+        });
+
+        loadUserName(function(username) {
+
+            $("#username1").html(username);
+            $("#username2").html(username);
+        });
+    });
+
+    function loadUserData(cb) {
+
+        mongoSitesApi.auth_users()
+            .then(function(users) {
+
+                $.post("/formatter/userViewTable", { allUsers: JSON.stringify( users ), selected: "<%= UserObject['_id'] %>" }, function(result) {
+
+                    $('#userSection').html(result);
+
+                    cb();
+                });
+            });
+    }
+
+    function loadUserFrames(cb) {
+
+        mongoSitesApi.auth_users()
+            .then(function(users) {
+
+                $.post("/formatter/userViewTableDashboard", { allUsers: JSON.stringify( users ), selected: "<%= UserObject['_id'] %>" }, function(result) {
+
+                    console.log(result);
+
+                    $('#userDashboardSection').html(result);
+
+                    cb();
+                }).fail(function(err){ 
+  // Handle error here
+  console.log(err);
+});
+            });
+    }
+
+    </script>
+  </head>
+  <body class="nav-md footer_fixed">
+    <div class="container body">
+      <div class="main_container">
+        <% include ../partials/leftMenu %>
+        <% include ../partials/topNav %>
+
+        <!-- page content -->
+        <div class="right_col" role="main">
+          <div class="">
+            <div class="page-title">
+              <div class="title_left">
+                <h3><%= UserObject['_id'] %></h3>
+              </div>
+            </div>
+
+            <div class="clearfix"></div>
+
+<div class="row" id="userSection">
+</div>
+            
+            </div>
+          </div>
+        </div>
+
+
+        <% include ../partials/footer %>
+
+      </div>
+    </div>
+    <% include ../partials/tail %>
+  </body>
+</html>

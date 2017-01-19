@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <% include ../partials/head %>
+  </head>
+  <body class="nav-md footer_fixed">
+    <div class="container body">
+      <div class="main_container">
+        <% var userData= user; %>
+        <% include ../partials/leftMenu %>
+        <% include ../partials/topNav %>
+
+        <!-- page content -->
+        <div class="right_col" role="main">
+          <div class="">
+            <div class="page-title">
+              <div class="title_left">
+                <h3>Dashboard</h3>
+              </div>
+            </div>
+          </div>
+        </div>
+
+
+        <% include ../partials/footer %>
+      </div>
+    </div>
+    <% include ../partials/tail %>
+  </body>
+</html>

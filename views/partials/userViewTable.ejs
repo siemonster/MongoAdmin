@@ -1,0 +1,725 @@
+              <div class="col-md-12 col-sm-12 col-xs-12">
+                <div class="x_panel">
+
+                  <div class="x_content">
+
+                    <form id="demo-form2" data-parsley-validate class="form-horizontal form-label-left">
+
+                        <div class="form-group">
+                            <label class="col-md-3 col-sm-3 col-xs-12 control-label">Active</label>
+                            <div class="col-md-9 col-sm-9 col-xs-12">
+                                <div class="checkbox">
+                                    <label>
+                                    <input id="activeBtn" name="activeBtn" type="checkbox" class="flat" <% if( UserObject.active == true) { %> checked="checked" <% } %>> </label>
+                                </div>
+                            </div>
+                            <script>
+
+                            $('#activeBtn').change(function() {
+
+                                mongoSitesApi.auth_update({_id: "<%= UserObject['_id'] %>", active: this.checked})
+                                    .then(function(data) {
+
+                                        new PNotify({
+                                            title: 'Saved',
+                                            text: 'Successfully saved.',
+                                            type: 'success',
+                                            styling: 'bootstrap3'});
+                                    })
+                                    .catch(function(data) {
+
+                                        console.log('b');
+                                        console.log(data);
+                                    });
+                            });
+
+
+                            </script>
+                        </div>
+
+                        <div class="form-group">
+                            <label class="col-md-3 col-sm-3 col-xs-12 control-label">Admin</label>
+                            <div class="col-md-9 col-sm-9 col-xs-12">
+                                <div class="checkbox">
+                                    <label>
+                                    <input id="adminBtn" name="adminBtn" type="checkbox" class="flat" <% if( UserObject.admin == true) { %> checked="checked" <% } %>> </label>
+                                </div>
+                            </div>
+
+                            <script>
+
+                            $('#adminBtn').change(function() {
+
+                                mongoSitesApi.auth_update({_id: "<%= UserObject['_id'] %>", admin: this.checked})
+                                    .then(function(data) {
+
+                                        new PNotify({
+                                            title: 'Saved',
+                                            text: 'Successfully saved.',
+                                            type: 'success',
+                                            styling: 'bootstrap3'});
+                                    })
+                                    .catch(function(data) {
+
+                                        console.log('b');
+                                        console.log(data);
+                                    });
+                            });
+
+
+                            </script>
+                        </div>
+
+                        <div class="divider-dashed"></div>
+
+                        <h2>Frames</h2>
+
+<!-- add new url frame !-->
+                        <button type="button" class="btn btn-success"  data-toggle="modal" data-target=".bs-newurl-modal-lg">Add Url Frame</button>
+
+                                        <div class="modal fade bs-newurl-modal-lg" tabindex="-1" role="dialog" aria-hidden="true">
+                                        <div class="modal-dialog modal-lg">
+                                            <div class="modal-content">
+
+                                            <div class="modal-header">
+                                                <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">×</span>
+                                                </button>
+                                                <h4 class="modal-title" id="myModalLabel">New URL Frame</h4>
+                                            </div>
+                                            <div class="modal-body">
+                                                <div class="form-group">
+                                                    <label class="control-label col-md-3 col-sm-3 col-xs-12" for="title">Title </label>
+                                                    <div class="col-md-6 col-sm-6 col-xs-12">
+                                                        <input id="new-title" class="form-control col-md-7 col-xs-12" type="text" name="new-title">
+                                                    </div>
+                                                </div>
+                                                <div class="form-group">
+                                                    <label class="control-label col-md-3 col-sm-3 col-xs-12" for="url">URL </label>
+                                                    <div class="col-md-6 col-sm-6 col-xs-12">
+                                                        <input id="new-url" class="form-control col-md-7 col-xs-12" type="text" name="new-url">
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="modal-footer">
+                                                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                                                <button id="btn-newUrl" type="button" class="btn btn-primary" data-dismiss="modal">Save</button>
+
+                                                <script>
+
+                                                $('#btn-newUrl').click(function() {
+
+                                                    mongoSitesApi.auth_users()
+                                                        .then(function(users) {
+
+                                                            $.post("/formatter/change/<%= encodeURIComponent(UserObject['_id']) %>/" + encodeURIComponent($('#new-title').val()), { allUsers: JSON.stringify( users ), NewValue: $('#new-url').val() }, function(result) {
+
+                                                                var newObject = JSON.parse(result);
+
+                                                                mongoSitesApi.auth_update(newObject)
+                                                                    .then(function(data) {
+
+                                                                        loadUserData(function() {
+
+                                                                        });
+                                                                    })
+                                                                    .catch(function(data) {
+
+                                                                        console.log('b');
+                                                                        console.log(data);
+                                                                    });
+                                                            });
+                                                        });
+                                                });
+
+                                                </script>
+                                            </div>
+
+                                            </div>
+                                        </div>
+                                        </div>
+
+<!-- /add new url frame !-->
+<!-- add new frame with login credentials !-->
+                        <button type="button" class="btn btn-success"  data-toggle="modal" data-target=".bs-addframelogin-modal-lg">Add Frame With Login</button>
+
+                                        <div class="modal fade bs-addframelogin-modal-lg" tabindex="-1" role="dialog" aria-hidden="true">
+                                        <div class="modal-dialog modal-lg">
+                                            <div class="modal-content">
+
+                                            <div class="modal-header">
+                                                <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">×</span>
+                                                </button>
+                                                <h4 class="modal-title" id="myModalLabel">New Frame Options</h4>
+                                            </div>
+                                            <div class="modal-body">
+                                                <div class="form-group">
+                                                    <label class="control-label col-md-3 col-sm-3 col-xs-12" for="addframelogin-title">Title </label>
+                                                    <div class="col-md-6 col-sm-6 col-xs-12">
+                                                        <input id="addframelogin-title" class="form-control col-md-7 col-xs-12" type="text" name="addframelogin-title">
+                                                    </div>
+                                                </div>
+
+                                                <div class="form-group">
+                                                    <label class="control-label col-md-3 col-sm-3 col-xs-12" for="addframelogin-login">Login </label>
+                                                    <div class="col-md-6 col-sm-6 col-xs-12">
+                                                        <input id="addframelogin-login" class="form-control col-md-7 col-xs-12" type="text" name="addframelogin-login">
+                                                    </div>
+                                                </div>
+
+                                                <div class="form-group">
+                                                    <label class="control-label col-md-3 col-sm-3 col-xs-12" for="addframelogin-password">Password </label>
+                                                    <div class="col-md-6 col-sm-6 col-xs-12">
+                                                        <input id="addframelogin-password" class="form-control col-md-7 col-xs-12" type="text" name="addframelogin-password">
+                                                    </div>
+                                                </div>
+
+                                                <div class="form-group">
+                                                    <label class="control-label col-md-3 col-sm-3 col-xs-12" for="addframelogin-type">Type </label>
+                                                    <div class="col-md-6 col-sm-6 col-xs-12">
+                                                        <input id="addframelogin-type" class="form-control col-md-7 col-xs-12" type="text" name="addframelogin-type">
+                                                    </div>
+                                                </div>
+
+                                                <div class="form-group">
+                                                    <label class="control-label col-md-3 col-sm-3 col-xs-12" for="addframelogin-url">URL </label>
+                                                    <div class="col-md-6 col-sm-6 col-xs-12">
+                                                        <input id="addframelogin-url" class="form-control col-md-7 col-xs-12" type="text" name="addframelogin-url">
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="modal-footer">
+                                                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                                                <button id="btn-addframelogin" type="button" class="btn btn-primary" data-dismiss="modal">Save Changes</button>
+
+                                                <script>
+
+                                                $('#btn-addframelogin').click(function() {
+
+                                                    var newVal = {
+                                                        login: $('#addframelogin-login').val(),
+                                                        password: $('#addframelogin-password').val(),
+                                                        type: $('#addframelogin-type').val(),
+                                                        url: $('#addframelogin-url').val()
+                                                    };
+
+                                                    mongoSitesApi.auth_users()
+                                                        .then(function(users) {
+
+                                                            $.post("/formatter/change/<%= encodeURIComponent(UserObject['_id']) %>/" + encodeURIComponent($('#addframelogin-title').val()), { allUsers: JSON.stringify( users ), NewObject: JSON.stringify( newVal ) }, function(result) {
+
+                                                                var newObject = JSON.parse(result);
+
+                                                                console.log(newObject);
+
+                                                                mongoSitesApi.auth_update(newObject)
+                                                                    .then(function(data) {
+
+                                                                        console.log(data);
+
+                                                                        loadUserData(function() {
+
+                                                                        });
+                                                                    })
+                                                                    .catch(function(data) {
+
+                                                                        console.log('b');
+                                                                        console.log(data);
+                                                                    });
+                                                            });
+                                                        });
+                                                });
+
+                                                </script>
+                                            </div>
+
+                                            </div>
+                                        </div>
+                                        </div>
+
+<!-- //add new frame with login credentials !-->
+                        <div class="divider-dashed"></div>
+
+<!-- iterate through user's frames -->
+                        <% var frameKeys = Object.keys(UserObject.frames); %>
+                        <% for (i = 0; i < frameKeys.length; i++) { %>
+
+                            <% var frameObject = UserObject.frames[frameKeys[i]]; %>
+
+<!-- simple url frame -->
+                            <% if(typeof(frameObject) == "string") { //simple %>
+
+                                <div class="form-group" id="formgroup-<%= i %>">
+                                    <div class="col-md-6 col-sm-6 col-xs-12">
+                                        <button type="button" class="btn btn-primary" data-toggle="modal" data-target=".bs-<%= i %>-modal-lg">Set <%= frameKeys[i] %> URL</button>
+
+                                        <div class="modal fade bs-<%= i %>-modal-lg" tabindex="-1" role="dialog" aria-hidden="true">
+                                        <div class="modal-dialog modal-lg">
+                                            <div class="modal-content">
+
+                                            <div class="modal-header">
+                                                <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">×</span>
+                                                </button>
+                                                <h4 class="modal-title" id="myModalLabel"><%= frameKeys[i] %> URL</h4>
+                                            </div>
+                                            <div class="modal-body">
+                                                <div class="form-group">
+                                                    <label class="control-label col-md-3 col-sm-3 col-xs-12" for="url">URL </label>
+                                                    <div class="col-md-6 col-sm-6 col-xs-12">
+                                                        <input id="<%= i %>-url" class="form-control col-md-7 col-xs-12" type="text" name="<%= i %>-url" value="<%= frameObject %>">
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="modal-footer">
+                                                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                                                <button id="btn-<%= i %>" type="button" class="btn btn-primary" data-dismiss="modal">Save Changes</button>
+                                                <button id="btn-<%= i %>-delete" type="button" class="btn btn-danger" data-dismiss="modal">Delete</button>
+
+                                                <script>
+
+                                                $('#btn-<%= i %>').click(function() {
+
+                                                    mongoSitesApi.auth_users()
+                                                        .then(function(users) {
+
+                                                            $.post("/formatter/change/<%= encodeURIComponent(UserObject['_id']) %>/<%= encodeURIComponent(frameKeys[i]) %>", { allUsers: JSON.stringify( users ), NewValue: $('#<%= i %>-url').val() }, function(result) {
+
+                                                                var newObject = JSON.parse(result);
+                                                                console.log(newObject);
+
+                                                                mongoSitesApi.auth_update(newObject)
+                                                                    .then(function(data) {
+
+                                                                        loadUserData(function() {
+
+                                                                        });
+                                                                    })
+                                                                    .catch(function(data) {
+
+                                                                        console.log('b');
+                                                                        console.log(data);
+                                                                    });
+                                                            });
+                                                        });
+                                                });
+
+                                                $('#btn-<%= i %>-delete').click(function() {
+
+                                                    mongoSitesApi.auth_users()
+                                                        .then(function(users) {
+
+                                                            $.post("/formatter/delete/<%= encodeURIComponent(UserObject['_id']) %>/<%= encodeURIComponent(frameKeys[i]) %>", { allUsers: JSON.stringify( users ) }, function(result) {
+
+                                                                var newObject = JSON.parse(result);
+                                                                console.log(newObject);
+
+                                                                mongoSitesApi.auth_update(newObject)
+                                                                    .then(function(data) {
+
+                                                                        loadUserData(function() {
+
+                                                                        });
+                                                                    })
+                                                                    .catch(function(data) {
+
+                                                                        console.log('b');
+                                                                        console.log(data);
+                                                                    });
+                                                            });
+                                                        });
+                                                });
+
+                                                </script>
+                                            </div>
+
+                                            </div>
+                                        </div>
+                                        </div>
+                                    </div>
+                                </div>
+<!-- /simple url frame -->
+
+<!-- dashboard frame -->
+                            <% } else if((typeof(frameObject) == "object") && ("sub_links" in frameObject)) {%>
+
+                                <div class="form-group" id="formgroup-<%= i %>">
+                                    <div class="col-md-6 col-sm-6 col-xs-12">
+
+                                        <button type="button" class="btn btn-primary" data-toggle="modal" data-target=".bs-<%= i %>-modal-lg">Set <%= frameKeys[i] %> Options</button>
+
+                                        <div class="modal fade bs-<%= i %>-modal-lg" tabindex="-1" role="dialog" aria-hidden="true" id="<%= i %>-modal-lg">
+                                        <div class="modal-dialog modal-lg">
+                                            <div class="modal-content">
+
+                                            <div class="modal-header">
+                                                <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">×</span>
+                                                </button>
+                                                <h4 class="modal-title" id="myModalLabel"><%= frameKeys[i] %> Options</h4>
+                                            </div>
+                                            <div class="modal-body">
+                                                <div class="form-group">
+                                                    <label class="control-label col-md-3 col-sm-3 col-xs-12" for="url">URL </label>
+                                                    <div class="col-md-6 col-sm-6 col-xs-12">
+                                                        <input id="<%= i %>-url" class="form-control col-md-7 col-xs-12" type="text" name="<%= i %>-url" value="<%= frameObject.url %>">
+                                                    </div>
+                                                </div>
+
+                                                <% var subLinks = frameObject['sub_links']; %>
+
+                                                <% for (j = 0; j < subLinks.length; j++) { %>
+
+                                                    <% var subLinkObject = subLinks[j]; %>
+
+                                                    <div class="form-group" id="formgroup-<%= i %>-<%= j %>">
+                                                        <button id="saveBtn-<%= i %>-<%= j %>" type="button" class="btn btn-success">Save</button>
+                                                        <button id="btn-<%= i %>-<%= j %>" type="button" class="btn btn-danger">Remove</button>
+                                                        <label class="control-label col-md-3 col-sm-3 col-xs-12" for="<%= i %>-<%= j %>"><%= subLinkObject.title %> </label>
+                                                        <div class="col-md-6 col-sm-6 col-xs-12">
+                                                            <input id="url-<%= i %>-<%= j %>" class="form-control col-md-7 col-xs-12" type="text" name="<%= i %>-<%= j %>" value="<%= subLinkObject.url %>">
+                                                        </div>
+
+                                                        <script>
+
+                                                        $('#btn-<%= i %>-<%= j %>').click(function() {
+
+                                                            console.log('here');
+
+                                                            $('#formgroup-<%= i %>-<%= j %>').remove();
+
+                                                            $.post("/collection/users/<%= encodeURIComponent(UserObject['_id']) %>/frames/<%= encodeURIComponent(frameKeys[i]) %>/sub_links/<%= subLinkObject.title %>/", { command: "delete" }, function(result) {
+
+                                                                if(result == 'authfailure') {
+
+                                                                    window.location.href = "/login";
+                                                                }
+                                                                else {
+
+                                                                    console.log(result);
+                                                                }
+                                                            });
+
+                                                            mongoSitesApi.auth_users()
+                                                                .then(function(users) {
+
+                                                                    $.post("/formatter/delete/<%= encodeURIComponent(UserObject['_id']) %>/Dashboards/<%= encodeURIComponent( subLinkObject.title ) %>", { allUsers: JSON.stringify( users ) }, function(result) {
+
+                                                                        var newObject = JSON.parse(result);
+                                                                        console.log(newObject);
+
+                                                                        mongoSitesApi.auth_update(newObject)
+                                                                            .then(function(data) {
+
+                                                                                loadUserData(function() {
+
+                                                                                });
+                                                                            })
+                                                                            .catch(function(data) {
+
+                                                                                console.log('b');
+                                                                                console.log(data);
+                                                                            });
+                                                                    });
+                                                                });
+                                                            });
+
+                                                        $('#saveBtn-<%= i %>-<%= j %>').click(function() {
+
+                                                            console.log('a');
+
+                                                            mongoSitesApi.auth_users()
+                                                                .then(function(users) {
+
+                                                                    $.post("/formatter/change/<%= encodeURIComponent(UserObject['_id']) %>/Dashboards/<%= encodeURIComponent( subLinkObject.title ) %>", { allUsers: JSON.stringify( users ), NewValue: $('#url-<%= i %>-<%= j %>').val() }, function(result) {
+
+                                                                        var newObject = JSON.parse(result);
+                                                                        console.log(newObject);
+
+                                                                        mongoSitesApi.auth_update(newObject)
+                                                                            .then(function(data) {
+
+                                                                                new PNotify({
+                                                                                    title: '<%= subLinkObject.title %> Saved',
+                                                                                    text: 'Your changes were successfully saved.',
+                                                                                    type: 'success',
+                                                                                    styling: 'bootstrap3'
+                                                                                });
+                                                                            })
+                                                                            .catch(function(data) {
+
+                                                                                console.log('b');
+                                                                                console.log(data);
+                                                                            });
+                                                                    });
+                                                                });
+                                                        });
+
+                                                        </script>
+
+                                                    </div>
+
+                                                <% } %>
+
+                                                <button id="addSubLinkBtn" name="addSubLinkBtn" type="button" class="btn btn-primary" data-toggle="modal" data-target=".bs-addsublink-modal-sm">Add Sub Link</button>
+
+                                            </div>
+                                            <div class="modal-footer">
+                                                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                                            </div>
+
+                                            </div>
+                                        </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                        <div class="modal fade bs-addsublink-modal-sm" tabindex="-1" role="dialog" aria-hidden="true">
+                            <div class="modal-dialog modal-sm">
+                            <div class="modal-content">
+
+                                <div class="modal-header">
+                                <h4 class="modal-title" id="myModalLabel2">Add Sub Link</h4>
+                                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">×</span>
+                                </div>
+                                <div class="modal-body">
+                                    <div class="form-group">
+                                        <label class="control-label col-md-3 col-sm-3 col-xs-12" for="addSubLink-title">Title </label>
+                                        <div class="col-md-6 col-sm-6 col-xs-12">
+                                            <input id="addSubLink-title" class="form-control col-md-7 col-xs-12" type="text" name="addSubLink-title">
+                                        </div>
+                                    </div>
+
+                                    <div class="form-group">
+                                        <label class="control-label col-md-3 col-sm-3 col-xs-12" for="addSubLink-url">Url </label>
+                                        <div class="col-md-6 col-sm-6 col-xs-12">
+                                            <input id="addSubLink-url" class="form-control col-md-7 col-xs-12" type="text" name="addSubLink-url">
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="modal-footer">
+                                    <button id="addSubLink-btn" type="button" data-dismiss="modal" class="btn btn-primary">Add Sub Link</button>
+
+                                    <script>
+
+                                    $('#addSubLink-btn').click(function() {
+
+/*
+                                        $.post("/collection/users/<%= encodeURIComponent(UserObject['_id']) %>/frames/<%= encodeURIComponent(frameKeys[i]) %>/sub_links/" + $('#addSubLink-title').val() + "/", { command: "add", newValue: $('#addSubLink-url').val()  }, function(result) {
+
+                                            if(result == 'authfailure') {
+
+                                                window.location.href = "/login";
+                                            }
+                                            else {
+
+                                                window.location.href = "/collection/users/<%= encodeURIComponent(UserObject['_id']) %>/?dash=<%= i %>-modal-lg";
+                                            }
+                                        });
+                                        */
+                                        mongoSitesApi.auth_users()
+                                            .then(function(users) {
+
+                                                $.post("/formatter/change/<%= encodeURIComponent(UserObject['_id']) %>/Dashboards/" + encodeURIComponent( $("#addSubLink-title").val() ), { allUsers: JSON.stringify( users ), NewValue: $('#addSubLink-url').val() }, function(result) {
+
+                                                    var newObject = JSON.parse(result);
+                                                    console.log(newObject);
+
+                                                    mongoSitesApi.auth_update(newObject)
+                                                        .then(function(data) {
+
+                                                            loadUserData(function() {
+
+                                                            });
+                                                        })
+                                                        .catch(function(data) {
+
+                                                            console.log('b');
+                                                            console.log(data);
+                                                        });
+                                                });
+                                            });
+                                    });
+                                    </script>
+                                </div>
+
+                            </div>
+                            </div>
+                        </div>
+<!-- /dashboard frame -->
+
+<!-- url frame with login credentials -->
+
+                            <% } else if((typeof(frameObject) == "object") && ("login" in frameObject)) {//login type %>
+
+                                <div class="form-group" id="formgroup-<%= i %>">
+                                    <div class="col-md-6 col-sm-6 col-xs-12">
+                                        <button type="button" class="btn btn-primary" data-toggle="modal" data-target=".bs-<%= i %>-modal-lg">Set <%= frameKeys[i] %> Options</button>
+
+                                        <div class="modal fade bs-<%= i %>-modal-lg" tabindex="-1" role="dialog" aria-hidden="true">
+                                        <div class="modal-dialog modal-lg">
+                                            <div class="modal-content">
+
+                                            <div class="modal-header">
+                                                <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">×</span>
+                                                </button>
+                                                <h4 class="modal-title" id="myModalLabel"><%= frameKeys[i] %> Options</h4>
+                                            </div>
+                                            <div class="modal-body">
+                                                <div class="form-group">
+                                                    <label class="control-label col-md-3 col-sm-3 col-xs-12" for="<%= i %>-login">Login </label>
+                                                    <div class="col-md-6 col-sm-6 col-xs-12">
+                                                        <input id="<%= i %>-login" class="form-control col-md-7 col-xs-12" type="text" name="<%= i %>-login" value="<%= frameObject.login %>">
+                                                    </div>
+                                                </div>
+
+                                                <div class="form-group">
+                                                    <label class="control-label col-md-3 col-sm-3 col-xs-12" for="<%= i %>-password">Password </label>
+                                                    <div class="col-md-6 col-sm-6 col-xs-12">
+                                                        <input id="<%= i %>-password" class="form-control col-md-7 col-xs-12" type="text" name="<%= i %>-password" value="<%= frameObject.password %>">
+                                                    </div>
+                                                </div>
+
+                                                <div class="form-group">
+                                                    <label class="control-label col-md-3 col-sm-3 col-xs-12" for="<%= i %>-type">Type </label>
+                                                    <div class="col-md-6 col-sm-6 col-xs-12">
+                                                        <input id="<%= i %>-type" class="form-control col-md-7 col-xs-12" type="text" name="<%= i %>-type" value="<%= frameObject.type %>">
+                                                    </div>
+                                                </div>
+
+                                                <div class="form-group">
+                                                    <label class="control-label col-md-3 col-sm-3 col-xs-12" for="<%= i %>-url">URL </label>
+                                                    <div class="col-md-6 col-sm-6 col-xs-12">
+                                                        <input id="<%= i %>-url" class="form-control col-md-7 col-xs-12" type="text" name="<%= i %>-url" value="<%= frameObject.url %>">
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="modal-footer">
+                                                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                                                <button id="btn-<%= i %>" type="button" class="btn btn-primary" data-dismiss="modal">Save Changes</button>
+                                                <button id="btn-<%= i %>-delete" type="button" class="btn btn-danger" data-dismiss="modal">Delete</button>
+
+                                                <script>
+
+                                                $('#btn-<%= i %>').click(function() {
+
+                                                    var newVal = {
+                                                        login: $('#<%= i %>-login').val(),
+                                                        password: $('#<%= i %>-password').val(),
+                                                        type: $('#<%= i %>-type').val(),
+                                                        url: $('#<%= i %>-url').val()
+                                                    };
+
+                                                    mongoSitesApi.auth_users()
+                                                        .then(function(users) {
+
+                                                            $.post("/formatter/change/<%= encodeURIComponent(UserObject['_id']) %>/<%= encodeURIComponent(frameKeys[i]) %>", { allUsers: JSON.stringify( users ), NewObject: JSON.stringify( newVal ) }, function(result) {
+
+                                                                var newObject = JSON.parse(result);
+
+                                                                console.log(newObject);
+
+                                                                mongoSitesApi.auth_update(newObject)
+                                                                    .then(function(data) {
+
+                                                                        console.log(data);
+
+                                                                        loadUserData(function() {
+
+                                                                        });
+                                                                    })
+                                                                    .catch(function(data) {
+
+                                                                        console.log('b');
+                                                                        console.log(data);
+                                                                    });
+                                                            });
+                                                        });
+                                                });
+
+                                                $('#btn-<%= i %>-delete').click(function() {
+
+                                                    mongoSitesApi.auth_users()
+                                                        .then(function(users) {
+
+                                                            $.post("/formatter/delete/<%= encodeURIComponent(UserObject['_id']) %>/<%= encodeURIComponent(frameKeys[i]) %>", { allUsers: JSON.stringify( users ) }, function(result) {
+
+                                                                var newObject = JSON.parse(result);
+                                                                console.log(newObject);
+
+                                                                mongoSitesApi.auth_update(newObject)
+                                                                    .then(function(data) {
+
+                                                                        loadUserData(function() {
+
+                                                                        });
+                                                                    })
+                                                                    .catch(function(data) {
+
+                                                                        console.log('b');
+                                                                        console.log(data);
+                                                                    });
+                                                            });
+                                                        });
+                                                });
+
+                                                </script>
+                                            </div>
+
+                                            </div>
+                                        </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                            <% } %>
+<!-- /url frame with login credentials -->
+
+                        <% } %>
+<!-- /iterate through user's frames -->
+
+
+                        <div class="ln_solid"></div>
+
+                        <button type="button" class="btn btn-danger" data-toggle="modal" data-target=".bs-deleteuser-modal-sm">Delete User</button>
+
+                        <div class="modal fade bs-deleteuser-modal-sm" tabindex="-1" role="dialog" aria-hidden="true">
+                            <div class="modal-dialog modal-sm">
+                            <div class="modal-content">
+
+                                <div class="modal-header">
+                                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">×</span>
+                                </button>
+                                <h4 class="modal-title" id="myModalLabel2">Delete User?</h4>
+                                </div>
+                                <div class="modal-body">
+                                <p>Are you sure you want to delete this user? This action cannot be undone.</p>
+                                </div>
+                                <div class="modal-footer">
+                                <button type="button" class="btn btn-danger" id="deleteBtn" name="deleteBtn">Yes</button>
+                                <button type="button" class="btn btn-primary" data-dismiss="modal">No</button>
+
+                                <script>
+
+                                $('#deleteBtn').click(function() {
+
+                                    mongoSitesApi.auth_delete("<%= UserObject['_id'] %>")
+                                        .then(function(data){          
+
+                                            window.location.href = "/collection/users/";
+                                        })
+                                        .catch(function(data) {
+
+                                            console.log('b');
+                                            console.log(data);                  
+                                        });
+                                });
+
+                                </script>
+                                </div>
+
+                            </div>
+                            </div>
+                        </div>
+
+                    </form>
+
+                  </div>
+                </div>

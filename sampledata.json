@@ -1,0 +1,227 @@
+[
+  {
+    "_id": "admin2@siemonster.com",
+    "_originated": 1479359239,
+    "active": true,
+    "admin": true,
+    "frames": {
+      "Alerts": {
+        "login": "admin",
+        "password": "admin",
+        "type": "411",
+        "url": "http://411.v2.siemonster.local/"
+      },
+      "Dashboards": {
+        "sub_links": [
+          {
+            "title": "Apache",
+            "url": "http://sm-kibana.v2.siemonster.local/app/kibana#/dashboard/Apache"
+          },
+          {
+            "title": "Cisco",
+            "url": "http://sm-kibana.v2.siemonster.local/app/kibana#/dashboard/Cisco-ASA"
+          },
+          {
+            "title": "HP Event Monitor",
+            "url": "http://sm-kibana.v2.siemonster.local/app/kibana#/dashboard/HP-Event-Monitor"
+          },
+          {
+            "title": "Palo Alto",
+            "url": "http://sm-kibana.v2.siemonster.local/app/kibana#/dashboard/PaloAlto-Overview"
+          },
+          {
+            "title": "SOC Demo",
+            "url": "http://sm-kibana.v2.siemonster.local/app/kibana#/dashboard/SIEMonster-SOC-1"
+          },
+          {
+            "title": "Ossec Alerts",
+            "url": "http://sm-kibana.v2.siemonster.local/app/kibana#/dashboard/OSSEC-Alerts"
+          },
+          {
+            "title": "PCI Compliance",
+            "url": "http://sm-kibana.v2.siemonster.local/app/kibana#/dashboard/PCI-Compliance"
+          },
+          {
+            "title": "Bro Connection",
+            "url": "http://sm-kibana.v2.siemonster.local/app/kibana#/dashboard/connection"
+          },
+          {
+            "title": "Nessus",
+            "url": "http://sm-kibana.v2.siemonster.local/app/kibana#/dashboard/Nessus-Scans"
+          }
+        ],
+        "url": "http://sm-kibana.v2.siemonster.local/app/kibana#/dashboard/Dockbeat-Dashboard"
+      },
+      "Event Monitor": "http://alerta-web.v2.siemonster.local/",
+      "Health": "http://health.v2.siemonster.local/dashboard/db/siemonster?theme=light",
+      "Incident Response": {
+        "login": "admin",
+        "password": "admin",
+        "type": "ir",
+        "url": "http://ir.v2.siemonster.local/"
+      },
+      "Jira": "https://wac-cdn.atlassian.com/software/jira/main/01/columns/00/content/0/localUpload/Backlog@2x.png.png",
+      "Reports": "http://reporting.v2.siemonster.local/",
+      "SPL Conversion": "http://splogtash.v2.siemonster.local/",
+      "ServiceNow": "http://www.rightanswers.com/assets/RightAnswers-Agent-Portal-for-ServiceNow.jpg",
+      "Slack": "http://mspoweruser.com/wp-content/uploads/2014/10/slack.png",
+      "Support": "https://siemonster.com/support/",
+      "Threat Intel": "http://minemeld.v2.siemonster.local"
+    },
+    "old_password": "siemonster"
+  },
+  {
+    "_id": "bro-user@siemonster.local",
+    "_originated": 1478586751,
+    "active": true,
+    "admin": false,
+    "frames": {
+      "Alerts": {
+        "login": "admin",
+        "password": "admin",
+        "type": "411",
+        "url": "http://411.v2.siemonster.local/"
+      },
+      "Dashboards": {
+        "sub_links": [
+          {
+            "title": "Bro Connection",
+            "url": "http://sm-kibana.v2.siemonster.local/app/kibana#/dashboard/connection"
+          },
+          {
+            "title": "Bro DNS",
+            "url": "http://sm-kibana.v2.siemonster.local/app/kibana#/dashboard/dns"
+          },
+          {
+            "title": "Bro Extracted Location",
+            "url": "http://sm-kibana.v2.siemonster.local/app/kibana#/dashboard/extracted-location"
+          },
+          {
+            "title": "Bro File",
+            "url": "http://sm-kibana.v2.siemonster.local/app/kibana#/dashboard/file"
+          },
+          {
+            "title": "Bro Geoip",
+            "url": "http://sm-kibana.v2.siemonster.local/app/kibana#/dashboard/geoip"
+          },
+          {
+            "title": "Bro HTTP",
+            "url": "http://sm-kibana.v2.siemonster.local/app/kibana#/dashboard/http"
+          },
+          {
+            "title": "Bro INTEL",
+            "url": "http://sm-kibana.v2.siemonster.local/app/kibana#/dashboard/intel"
+          },
+          {
+            "title": "Bro Log",
+            "url": "http://sm-kibana.v2.siemonster.local/app/kibana#/dashboard/log"
+          },
+          {
+            "title": "Bro Notice",
+            "url": "http://sm-kibana.v2.siemonster.local/app/kibana#/dashboard/notice"
+          },
+          {
+            "title": "Bro SSL",
+            "url": "http://sm-kibana.v2.siemonster.local/app/kibana#/dashboard/ssl"
+          },
+          {
+            "title": "Bro Unknown Traffic",
+            "url": "http://sm-kibana.v2.siemonster.local/app/kibana#/dashboard/unknown-traffic"
+          },
+          {
+            "title": "Bro Weird",
+            "url": "http://sm-kibana.v2.siemonster.local/app/kibana#/dashboard/weird"
+          }
+        ],
+        "url": "http://sm-kibana.v2.siemonster.local/app/kibana#/dashboard/connection"
+      },
+      "Event Monitor": "http://alerta-web.v2.siemonster.local/",
+      "Health": "http://health.v2.siemonster.local/dashboard/db/siemonster?theme=light",
+      "Incident Response": {
+        "login": "admin",
+        "password": "admin",
+        "type": "ir",
+        "url": "http://ir.v2.siemonster.local/"
+      },
+      "Reports": "http://reporting.v2.siemonster.local/",
+      "Support": "https://siemonster.com/support/",
+      "Threat Intel": {
+        "login": "admin",
+        "password": "minemeld",
+        "type": "minemeld",
+        "url": "https://minemeld.v2.siemonster.com/"
+      }
+    },
+    "old_password": "siemonster"
+  },
+  {
+    "_id": "admin@siemonster.com",
+    "active": true,
+    "admin": true,
+    "frames": {
+      "Alerts": {
+        "login": "admin",
+        "password": "admin",
+        "type": "411",
+        "url": "http://411.customer-1.siemonster.com/"
+      },
+      "Dashboards": {
+        "sub_links": [
+          {
+            "title": "Apache",
+            "url": "http://sm-kibana.customer-1.siemonster.com/app/kibana#/dashboard/Apache"
+          },
+          {
+            "title": "Cisco",
+            "url": "http://sm-kibana.customer-1.siemonster.com/app/kibana#/dashboard/Cisco-ASA"
+          },
+          {
+            "title": "HP Event Monitor",
+            "url": "http://sm-kibana.customer-1.siemonster.com/app/kibana#/dashboard/HP-Event-Monitor"
+          },
+          {
+            "title": "Palo Alto",
+            "url": "http://sm-kibana.customer-1.siemonster.com/app/kibana#/dashboard/PaloAlto-Overview"
+          },
+          {
+            "title": "SOC Demo",
+            "url": "http://sm-kibana.customer-1.siemonster.com/app/kibana#/dashboard/SIEMonster-SOC-1"
+          },
+          {
+            "title": "Ossec Alerts",
+            "url": "http://sm-kibana.customer-1.siemonster.com/app/kibana#/dashboard/OSSEC-Alerts"
+          },
+          {
+            "title": "PCI Compliance",
+            "url": "http://sm-kibana.customer-1.siemonster.com/app/kibana#/dashboard/PCI-Compliance"
+          },
+          {
+            "title": "Bro Connection",
+            "url": "http://sm-kibana.customer-1.siemonster.com/app/kibana#/dashboard/connection"
+          },
+          {
+            "title": "Nessus",
+            "url": "http://sm-kibana.customer-1.siemonster.com/app/kibana#/dashboard/Nessus-Scans"
+          }
+        ],
+        "url": "http://sm-kibana.customer-1.siemonster.com/app/kibana#/dashboard/Dockbeat-Dashboard"
+      },
+      "Event Monitor": "http://alerta-web.customer-1.siemonster.com/",
+      "Health": "http://health.customer-1.siemonster.com/dashboard/db/siemonster?theme=light",
+      "Incident Response": {
+        "login": "admin",
+        "password": "admin",
+        "type": "ir",
+        "url": "http://ir.customer-1.siemonster.com/"
+      },
+      "Jira": "https://wac-cdn.atlassian.com/software/jira/main/01/columns/00/content/0/localUpload/Backlog@2x.png.png",
+      "Reports": "http://reporting.customer-1.siemonster.com/",
+      "SPL Conversion": "http://splogtash.customer-1.siemonster.com/",
+      "ServiceNow": "http://www.rightanswers.com/assets/RightAnswers-Agent-Portal-for-ServiceNow.jpg",
+      "Slack": "http://mspoweruser.com/wp-content/uploads/2014/10/slack.png",
+      "Support": "https://siemonster.com/support/",
+      "Threat Intel": "http://minemeld.customer-1.siemonster.com"
+    },
+    "old_password": "siemonster"
+  }
+]

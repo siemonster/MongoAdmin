@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <% include ../partials/head %>
+
+    <script type="text/javascript">
+
+        $(window).load(function(){
+
+          checkLogin();
+          
+          loadUserName(function(username) {
+
+            $("#username1").html(username);
+            $("#username2").html(username);
+          });
+       });
+
+    </script>
+    
+  </head>
+  <body class="nav-md footer_fixed">
+    <div class="container body">
+      <div class="main_container">
+        <% var userData= localUser; %>
+        <% var collectionData= Collections; %>
+        <% include ../partials/leftMenu %>
+        <% include ../partials/topNav %>
+
+        <!-- page content -->
+        <div class="right_col" role="main">
+          <div class="">
+            <div class="page-title">
+              <div class="title_left">
+                <h3>Dashboard</h3>
+              </div>
+            </div>
+          </div>
+        </div>
+
+
+        <% include ../partials/footer %>
+      </div>
+    </div>
+    <% include ../partials/tail %>
+  </body>
+</html>
