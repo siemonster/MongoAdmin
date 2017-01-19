@@ -23,7 +23,7 @@
 
     <script src="/vendors/jquery/dist/jquery.min.js"></script>
 
-    <script src="/js/mongoSitesApi.js?site=siemonster"></script>
+    <script src="<%= process.env.MSA_FULL_URL %>"></script>
 
     <script>
     function login() {
@@ -31,13 +31,18 @@
       var email = $('#emailTxt').val();
       var password = $('#passwordTxt').val();
 
+      console.log('here');
+
       mongoSitesApi.auth(email, password)
             .then(function (data) {
 
+              console.log('a');
               window.location.href = "/collection/users";
             })
             .catch(function (error) {
 
+              console.log('b');
+              console.log(error);
             });
     }
     </script>
