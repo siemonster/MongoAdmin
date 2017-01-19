@@ -109,24 +109,6 @@
                                                 $('#createUser-Btn').click(function() {
 
                                                   createUser($('#createUser-Email').val(), $('#createUser-Password').val());
-/*
-                                                  $.post("/collection/users/", { email: $('#createUser-Email').val(), password: $('#createUser-Password').val() }, function(result) {
-
-                                                    if(result == "success") {
-
-                                                      window.location.href = "/collection/users/" + encodeURIComponent($('#createUser-Email').val());
-                                                    }
-                                                    else if (result == "exists") {
-
-                                                        new PNotify({
-                                                            title: 'User Exists',
-                                                            text: $('#createUser-Email').val() + ' already exists.',
-                                                            type: 'error',
-                                                            styling: 'bootstrap3'
-                                                        });
-                                                    }
-                                                  });
-                                                  */
                                                 });
 
 
