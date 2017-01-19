@@ -13,7 +13,8 @@ router.get('/login', function(req, res, next) {
 
 router.get('/', function(req, res, next) {
 
-    res.render('pages/index', {  } );
+    //res.render('pages/index', {  } );
+    res.redirect('/collection/users');
 });
 
 router.post('/formatter/userListTable', function(req, res, next) {
