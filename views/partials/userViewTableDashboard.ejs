@@ -1,108 +1,90 @@
 
-                                        <button type="button" class="btn btn-primary" data-toggle="modal" data-target=".bs-Dashboards-modal-lg">Set Dashboards Options</button>
+                                                        <% var dashboardsObject = UserObject.frames.Dashboards; %>
 
-                                        <div class="modal fade bs-Dashboards-modal-lg" tabindex="-1" role="dialog" aria-hidden="true" id="Dashboards-modal-lg">
-                                        <div class="modal-dialog modal-lg">
-                                            <div class="modal-content">
-
-                                            <div class="modal-header">
-                                                <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">×</span>
-                                                </button>
-                                                <h4 class="modal-title" id="myModalLabel">Dashboards Options</h4>
-                                            </div>
-                                            <div class="modal-body">
-                                                <div class="form-group">
-                                                    <label class="control-label col-md-3 col-sm-3 col-xs-12" for="url">URL </label>
-                                                    <div class="col-md-6 col-sm-6 col-xs-12">
-                                                        <input id="Dashboards-url" class="form-control col-md-7 col-xs-12" type="text" name="Dashboards-url" value="<%= Dashboards.url %>">
-                                                    </div>
-                                                </div>
-
-                                                <% var subLinks = frameObject['sub_links']; %>
-
-                                                <% for (j = 0; j < subLinks.length; j++) { %>
-
-                                                    <% var subLinkObject = subLinks[j]; %>
-
-                                                    <div class="form-group" id="formgroup-Dashboards-<%= j %>">
-                                                        <button id="saveBtn-Dashboards-<%= j %>" type="button" class="btn btn-success">Save</button>
-                                                        <button id="btn-Dashboards-<%= j %>" type="button" class="btn btn-danger">Remove</button>
-                                                        <label class="control-label col-md-3 col-sm-3 col-xs-12" for="Dashboards-<%= j %>"><%= subLinkObject.title %> </label>
-                                                        <div class="col-md-6 col-sm-6 col-xs-12">
-                                                            <input id="url-Dashboards-<%= j %>" class="form-control col-md-7 col-xs-12" type="text" name="Dashboards-<%= j %>" value="<%= subLinkObject.url %>">
+                                                        <div class="form-group">
+                                                            <label class="control-label col-md-3 col-sm-3 col-xs-12" for="Dashboards-url">URL </label>
+                                                            <div class="col-md-6 col-sm-6 col-xs-12">
+                                                                <input id="Dashboards-url" class="form-control col-md-7 col-xs-12" type="text" name="Dashboards-url" value="<%= dashboardsObject.url %>">
+                                                            </div>
                                                         </div>
 
-                                                        <script>
+                                                        <% var subLinks = dashboardsObject['sub_links']; %>
 
-                                                        $('#btn-Dashboards-<%= j %>').click(function() {
+                                                        <% for (j = 0; j < subLinks.length; j++) { %>
 
-                                                            $('#formgroup-Dashboards-<%= j %>').remove();
+                                                            <% var subLinkObject = subLinks[j]; %>
 
-                                                            mongoSitesApi.auth_users()
-                                                                .then(function(users) {
+                                                            <div class="form-group" id="formgroup-Dashboards-<%= j %>">
+                                                                <button id="saveBtn-Dashboards-<%= j %>" type="button" class="btn btn-success">Save</button>
+                                                                <button id="btn-Dashboards-<%= j %>" type="button" class="btn btn-danger">Remove</button>
+                                                                <label class="control-label col-md-3 col-sm-3 col-xs-12" for="Dashboards-<%= j %>"><%= subLinkObject.title %> </label>
+                                                                <div class="col-md-6 col-sm-6 col-xs-12">
+                                                                    <input id="url-Dashboards-<%= j %>" class="form-control col-md-7 col-xs-12" type="text" name="Dashboards-<%= j %>" value="<%= subLinkObject.url %>">
+                                                                </div>
 
-                                                                    $.post("/formatter/delete/<%= encodeURIComponent(UserObject['_id']) %>/Dashboards/<%= encodeURIComponent( subLinkObject.title ) %>", { allUsers: JSON.stringify( users ) }, function(result) {
+                                                                <script>
 
-                                                                        var newObject = JSON.parse(result);
-                                                                        console.log(newObject);
+                                                                $('#btn-Dashboards-<%= j %>').click(function() {
 
-                                                                        mongoSitesApi.auth_update(newObject)
-                                                                            .then(function(data) {
+                                                                    console.log('here');
 
-                                                                            })
-                                                                            .catch(function(data) {
+                                                                    $('#formgroup-Dashboards-<%= j %>').remove();
 
-                                                                                console.log('b');
-                                                                                console.log(data);
+                                                                    mongoSitesApi.auth_users()
+                                                                        .then(function(users) {
+
+                                                                            $.post("/formatter/delete/<%= encodeURIComponent(UserObject['_id']) %>/Dashboards/<%= encodeURIComponent( subLinkObject.title ) %>", { allUsers: JSON.stringify( users ) }, function(result) {
+
+                                                                                var newObject = JSON.parse(result);
+                                                                                console.log(newObject);
+
+                                                                                mongoSitesApi.auth_update(newObject)
+                                                                                    .then(function(data) {
+
+                                                                                    })
+                                                                                    .catch(function(data) {
+
+                                                                                        console.log('b');
+                                                                                        console.log(data);
+                                                                                    });
                                                                             });
+                                                                        });
                                                                     });
-                                                                });
-                                                            });
 
-                                                        $('#saveBtn-Dashboards-<%= j %>').click(function() {
+                                                                $('#saveBtn-Dashboards-<%= j %>').click(function() {
 
-                                                            console.log('a');
+                                                                    console.log('a');
 
-                                                            mongoSitesApi.auth_users()
-                                                                .then(function(users) {
+                                                                    mongoSitesApi.auth_users()
+                                                                        .then(function(users) {
 
-                                                                    $.post("/formatter/change/<%= encodeURIComponent(UserObject['_id']) %>/Dashboards/<%= encodeURIComponent( subLinkObject.title ) %>", { allUsers: JSON.stringify( users ), NewValue: $('#url-Dashboards-<%= j %>').val() }, function(result) {
+                                                                            $.post("/formatter/change/<%= encodeURIComponent(UserObject['_id']) %>/Dashboards/<%= encodeURIComponent( subLinkObject.title ) %>", { allUsers: JSON.stringify( users ), NewValue: $('#url-Dashboards-<%= j %>').val() }, function(result) {
 
-                                                                        var newObject = JSON.parse(result);
-                                                                        console.log(newObject);
+                                                                                var newObject = JSON.parse(result);
+                                                                                console.log(newObject);
 
-                                                                        mongoSitesApi.auth_update(newObject)
-                                                                            .then(function(data) {
+                                                                                mongoSitesApi.auth_update(newObject)
+                                                                                    .then(function(data) {
 
-                                                                                new PNotify({
-                                                                                    title: '<%= subLinkObject.title %> Saved',
-                                                                                    text: 'Your changes were successfully saved.',
-                                                                                    type: 'success',
-                                                                                    styling: 'bootstrap3'
-                                                                                });
-                                                                            })
-                                                                            .catch(function(data) {
+                                                                                        new PNotify({
+                                                                                            title: '<%= subLinkObject.title %> Saved',
+                                                                                            text: 'Your changes were successfully saved.',
+                                                                                            type: 'success',
+                                                                                            styling: 'bootstrap3'
+                                                                                        });
+                                                                                    })
+                                                                                    .catch(function(data) {
 
-                                                                                console.log('b');
-                                                                                console.log(data);
+                                                                                        console.log('b');
+                                                                                        console.log(data);
+                                                                                    });
                                                                             });
-                                                                    });
+                                                                        });
                                                                 });
-                                                        });
 
-                                                        </script>
+                                                                </script>
 
-                                                    </div>
+                                                            </div>
+                                                        <% } %>
 
-                                                <% } %>
-
-                                                <button id="addSubLinkBtn" name="addSubLinkBtn" type="button" class="btn btn-primary" data-toggle="modal" data-target=".bs-addsublink-modal-sm">Add Sub Link</button>
-
-                                            </div>
-                                            <div class="modal-footer">
-                                                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-                                            </div>
-
-                                            </div>
-                                        </div>
-                                        </div>
+                                                        <button id="addSubLinkBtn" name="addSubLinkBtn" type="button" class="btn btn-primary" data-toggle="modal" data-target=".bs-addsublink-modal-sm">Add Sub Link</button>
