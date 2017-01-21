@@ -23,26 +23,38 @@
 
     <script src="/vendors/jquery/dist/jquery.min.js"></script>
 
-    <script src="<%= process.env.MSA_FULL_URL %>"></script>
+    <script src="/js2/mongoSitesApi.js"></script>
 
     <script>
     function login() {
 
+      $('#loginBtn').disabled=true;
+      $('#loginBtn').html("Logging In...");
+
       var email = $('#emailTxt').val();
       var password = $('#passwordTxt').val();
-
-      console.log('here');
 
       mongoSitesApi.auth(email, password)
             .then(function (data) {
 
-              console.log('a');
+              console.log('data');
+              console.log(data);
+
               window.location.href = "/collection/users";
             })
             .catch(function (error) {
 
-              console.log('b');
-              console.log(error);
+                console.log('c');
+                console.log(error);
+
+                $('#loginBtn').disabled=false;
+                $('#loginBtn').html("Log In");
+                new PNotify({
+                    title: 'Login Failed',
+                    text: 'Login failed. Please check your username and password.',
+                    type: 'error',
+                    styling: 'bootstrap3'
+                  });
             });
     }
     </script>
@@ -65,7 +77,7 @@
                 <input id="passwordTxt" name="passwordTxt" type="password" class="form-control" placeholder="Password" required="" />
               </div>
               <div>
-                <a class="btn btn-default submit" onclick="login()">Log in</a>
+                <a class="btn btn-default submit" onclick="login()" id="loginBtn">Log in</a>
               </div>
 
               <div class="clearfix"></div>
