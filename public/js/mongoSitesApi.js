@@ -34,7 +34,7 @@ mongoSitesApi = (function() {
     }
 
     return {
-        _server: (typeof MSA_SERVER_URL !== 'undefined') ? MSA_SERVER_URL : '//admin.customer-1.siemonster.com',
+        _server: (typeof MSA_SERVER_URL !== 'undefined') ? MSA_SERVER_URL : '--MSA_SERVER_URL--',
         _call: function (method, data) {
 
             var _this = this;
@@ -48,7 +48,7 @@ mongoSitesApi = (function() {
 
                 if (location.host.match(/^(localhost|127.\d+.\d+.\d+)(:\d+)?$/) || 
                     location.protocol == 'file:') {
-                    xmlhttp.setRequestHeader('X-MongoApi-Site', 'siemonster')
+                    xmlhttp.setRequestHeader('X-MongoApi-Site', '--MSA_SITE_NAME--')
                 }
 
                 xmlhttp.onreadystatechange = function () {
