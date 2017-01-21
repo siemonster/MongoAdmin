@@ -4,10 +4,10 @@ var favicon = require('serve-favicon');
 var logger = require('morgan');
 var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
-var dotenv = require('dotenv');
+//var dotenv = require('dotenv');
 var expressSession = require('express-session');
 
-dotenv.config();
+//dotenv.config();
 
 var index = require('./routes/index');
 
