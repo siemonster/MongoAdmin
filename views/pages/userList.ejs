@@ -32,7 +32,7 @@
 
         function createUser(email, password) {
 
-          mongoSitesApi.auth_register({_id: "cteel@pocketwatchllc.com", password: "test password"})
+          mongoSitesApi.auth_register({_id: email, password: password})
                 .then(function(result) {
 
                   console.log('a');
