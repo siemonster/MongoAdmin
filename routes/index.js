@@ -3,6 +3,19 @@ var router = express.Router();
 var _ = require('underscore');
 var fs = require('fs');
 
+router.get('/js2/mongoSitesApi.js', function(req, res, next) {
+
+  fs.readFile('./public/js/mongoSitesApi.js', 'utf8', function(err, data) {
+
+    var correctedUrl = process.env.MSA_URL.replace('https://', '//').replace('http://', '//');
+
+    var modifiedData = data.replace("'--MSA_SERVER_URL--'", "'" + correctedUrl + "'");
+    modifiedData = modifiedData.replace("'--MSA_SITE_NAME--'", "'" + process.env.SITE_NAME + "'");
+
+    res.send(modifiedData);
+  });
+});
+
 router.get('/login', function(req, res, next) {
 
   req.session.destroy(function(err) {
