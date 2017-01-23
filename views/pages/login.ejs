@@ -23,7 +23,8 @@
 
     <script src="/vendors/jquery/dist/jquery.min.js"></script>
 
-    <script src="/js2/mongoSitesApi.js"></script>
+<!--    <script src="/js2/mongoSitesApi.js"></script>  -->
+    <script src="<%= process.env.MSA_URL %>/mongoSitesApi.js?site=<%= process.env.SITE_NAME %>"></script>
 
     <script>
     function login() {
