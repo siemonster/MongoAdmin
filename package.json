@@ -13,7 +13,6 @@
     "ejs": "~2.5.2",
     "express": "~4.14.0",
     "express-session": "^1.14.2",
-    "mongo-sites-api": "^0.7.0",
     "morgan": "~1.7.0",
     "serve-favicon": "~2.3.0",
     "underscore": "^1.8.3"
