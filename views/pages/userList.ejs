@@ -45,7 +45,7 @@
                           mongoSitesApi.auth_users()
                             .then(function(users) {
 
-                              $.post("/formatter/initialSetup/<%= encodeURIComponent(UserObject['_id']) %>/", { allUsers: JSON.stringify( users ), admin: logged_in._id }, function(result) {
+                              $.post("/formatter/initialSetup/" + encodeURIComponent(email) + "/", { allUsers: JSON.stringify( users ), admin: logged_in._id }, function(result) {
 
                                   var newObject = JSON.parse(result);
 
