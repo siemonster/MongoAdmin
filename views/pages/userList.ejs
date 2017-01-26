@@ -35,9 +35,35 @@
           mongoSitesApi.auth_register({_id: email, password: password})
                 .then(function(result) {
 
-                  console.log('a');
-                  console.log(result);
-                    window.location.href = "/collection/users/" + encodeURIComponent(email);
+                mongoSitesApi.auth_check()
+                    .then(function (logged_in) {
+
+                        if(logged_in) {
+
+                          var adminUserId = logged_in._id;
+
+                          mongoSitesApi.auth_users()
+                            .then(function(users) {
+
+                              $.post("/formatter/initialSetup/<%= encodeURIComponent(UserObject['_id']) %>/", { allUsers: JSON.stringify( users ), admin: logged_in._id }, function(result) {
+
+                                  var newObject = JSON.parse(result);
+
+                                  mongoSitesApi.auth_update(newObject)
+                                      .then(function(data) {
+
+                                          window.location.href = "/collection/users/" + encodeURIComponent(email);
+                                      })
+                                      .catch(function(data) {
+
+                                          console.log('b');
+                                          console.log(data);
+                                      });
+
+                              });
+                            });
+                        }
+                    });
                 })
                 .catch(function(error) {
 
