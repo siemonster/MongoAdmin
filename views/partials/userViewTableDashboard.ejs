@@ -8,6 +8,32 @@
                                                             </div>
                                                             <script>
                                                             $('#Dashboards-url').change(function() {
+                                                                
+                                                                mongoSitesApi.auth_users()
+                                                                    .then(function(users) {
+
+                                                                        $.post("/formatter/change/<%= encodeURIComponent(UserObject['_id']) %>/DashboardUrl/", { allUsers: JSON.stringify( users ), Url: $('#Dashboards-url').val() }, function(result) {
+
+                                                                            var newObject = JSON.parse(result);
+                                                                            console.log(newObject);
+
+                                                                            mongoSitesApi.auth_update(newObject)
+                                                                                .then(function(data) {
+
+                                                                                    new PNotify({
+                                                                                        title: 'URL Saved',
+                                                                                        text: 'Your changes were successfully saved.',
+                                                                                        type: 'success',
+                                                                                        styling: 'bootstrap3'
+                                                                                    });
+                                                                                })
+                                                                                .catch(function(data) {
+
+                                                                                    console.log('b');
+                                                                                    console.log(data);
+                                                                                });
+                                                                        });
+                                                                    });
 
                                                             });
                                                             </script>
@@ -93,35 +119,3 @@
                                                         <% } %>
 
                                                         <button id="addSubLinkBtn" name="addSubLinkBtn" type="button" class="btn btn-primary" data-toggle="modal" data-target=".bs-addsublink-modal-sm">Add Sub Link</button>
-
-                                                        <script>
-                                                        $('#addSubLinkBtn').click(function() {
-
-                                                                mongoSitesApi.auth_users()
-                                                                    .then(function(users) {
-
-                                                                        $.post("/formatter/change/<%= encodeURIComponent(UserObject['_id']) %>/DashboardUrl/", { allUsers: JSON.stringify( users ), Url: $('#Dashboards-url').val() }, function(result) {
-
-                                                                            var newObject = JSON.parse(result);
-                                                                            console.log(newObject);
-
-                                                                            mongoSitesApi.auth_update(newObject)
-                                                                                .then(function(data) {
-
-                                                                                    new PNotify({
-                                                                                        title: 'URL Saved',
-                                                                                        text: 'Your changes were successfully saved.',
-                                                                                        type: 'success',
-                                                                                        styling: 'bootstrap3'
-                                                                                    });
-                                                                                })
-                                                                                .catch(function(data) {
-
-                                                                                    console.log('b');
-                                                                                    console.log(data);
-                                                                                });
-                                                                        });
-                                                                    });
-                                                        });
-
-                                                        </script>
