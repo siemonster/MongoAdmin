@@ -224,10 +224,10 @@ router.post('/formatter/initialSetup/:uid/', function(req, res, next) {
     if(selectedUserObject.frames == undefined)
       selectedUserObject.frames = {};
 
-    selectedUserObject.frames['Event Monitor'] = adminUserObject['Event Monitor'];
-    selectedUserObject.frames['Jira'] = adminUserObject['Jira'];
-    selectedUserObject.frames['ServiceNow'] = adminUserObject['ServiceNow'];
-    selectedUserObject.frames['Slack'] = adminUserObject['Slack'];
+    selectedUserObject.frames['Event Monitor'] = adminUserObject.frames['Event Monitor'];
+    selectedUserObject.frames['Jira'] = adminUserObject.frames['Jira'];
+    selectedUserObject.frames['ServiceNow'] = adminUserObject.frames['ServiceNow'];
+    selectedUserObject.frames['Slack'] = adminUserObject.frames['Slack'];
 
     selectedUserObject.frames.Dashboards = { url: process.env.DEFAULT_DASHBOARD_URL, sub_links: [] };
 
