@@ -203,6 +203,37 @@ router.post('/formatter/delete/:uid/:frameName', function(req, res, next) {
     res.send(JSON.stringify(selectedUserObject));
 });
 
+router.post('/formatter/initialSetup/:uid/', function(req, res, next) {
+
+    var allUsers = JSON.parse(req.body.allUsers);
+    var selectedUserObject = {};
+    var adminUserObject = {};
+
+    _.each(allUsers, function(userObject) {
+
+      if(userObject['_id'] == req.params.uid) {
+
+        selectedUserObject = userObject;
+      }
+      else if(userObject['_id'] == req.body.admin) {
+
+        adminUserObject = userObject;
+      }
+    });
+
+    if(selectedUserObject.frames == undefined)
+      selectedUserObject.frames = {};
+
+    selectedUserObject.frames['Event Monitor'] = adminUserObject['Event Monitor'];
+    selectedUserObject.frames['Jira'] = adminUserObject['Jira'];
+    selectedUserObject.frames['ServiceNow'] = adminUserObject['ServiceNow'];
+    selectedUserObject.frames['Slack'] = adminUserObject['Slack'];
+
+    selectedUserObject.frames.Dashboards = { url: process.env.DEFAULT_DASHBOARD_URL, sub_links: [] };
+
+    res.send(JSON.stringify(selectedUserObject));
+});
+
 router.post('/formatter/change/:uid/DashboardUrl/', function(req, res, next) {
 
     var allUsers = JSON.parse(req.body.allUsers);
