@@ -221,15 +221,16 @@ router.post('/formatter/initialSetup/:uid/', function(req, res, next) {
       }
     });
 
-    if(selectedUserObject.frames == undefined)
-      selectedUserObject.frames = {};
-
     selectedUserObject.frames['Event Monitor'] = adminUserObject.frames['Event Monitor'];
     selectedUserObject.frames['Jira'] = adminUserObject.frames['Jira'];
     selectedUserObject.frames['ServiceNow'] = adminUserObject.frames['ServiceNow'];
     selectedUserObject.frames['Slack'] = adminUserObject.frames['Slack'];
 
-    selectedUserObject.frames.Dashboards = { url: process.env.DEFAULT_DASHBOARD_URL, sub_links: [] };
+    var dashboardObject = {};
+    dashboardObject['sub_links'] = [];
+    dashboardObject['url'] = process.env.DEFAULT_DASHBOARD_URL
+
+    selectedUserObject.frames['Dashboards'] = dashboardObject;
 
     res.send(JSON.stringify(selectedUserObject));
 });
@@ -247,13 +248,7 @@ router.post('/formatter/change/:uid/DashboardUrl/', function(req, res, next) {
       }
     });
 
-    if(selectedUserObject.frames == undefined)
-      selectedUserObject.frames = {};
-
-    if(selectedUserObject.frames.Dashboards == undefined)
-      selectedUserObject.frames.Dashboards = { url: process.env.DEFAULT_DASHBOARD_URL, sub_links: [] };
-
-    selectedUserObject.frames.Dashboards.url = req.body.url;
+    selectedUserObject.frames.Dashboards.url = req.body.Url;
 
     res.send(JSON.stringify(selectedUserObject));
 });
