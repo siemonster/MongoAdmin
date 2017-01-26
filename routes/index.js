@@ -203,6 +203,30 @@ router.post('/formatter/delete/:uid/:frameName', function(req, res, next) {
     res.send(JSON.stringify(selectedUserObject));
 });
 
+router.post('/formatter/change/:uid/DashboardUrl/', function(req, res, next) {
+
+    var allUsers = JSON.parse(req.body.allUsers);
+    var selectedUserObject = {};
+
+    _.each(allUsers, function(userObject) {
+
+      if(userObject['_id'] == req.params.uid) {
+
+        selectedUserObject = userObject;
+      }
+    });
+
+    if(selectedUserObject.frames == undefined)
+      selectedUserObject.frames = {};
+
+    if(selectedUserObject.frames.Dashboards == undefined)
+      selectedUserObject.frames.Dashboards = { url: process.env.DEFAULT_DASHBOARD_URL, sub_links: [] };
+
+    selectedUserObject.frames.Dashboards.url = req.body.url;
+
+    res.send(JSON.stringify(selectedUserObject));
+});
+
 router.post('/formatter/change/:uid/Dashboards/:subLink', function(req, res, next) {
 
     var allUsers = JSON.parse(req.body.allUsers);
