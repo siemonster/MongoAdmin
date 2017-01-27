@@ -13,7 +13,7 @@
                                                                 mongoSitesApi.auth_users()
                                                                     .then(function(users) {
 
-                                                                        $.post("/formatter/change/<%= encodeURIComponent(UserObject['_id']) %>/DashboardUrl/", { allUsers: JSON.stringify( users ), Url: $('#Dashboards-url').val() }, function(result) {
+                                                                        $.post("/formatter/changeDashUrl/<%= encodeURIComponent(UserObject['_id']) %>/", { allUsers: JSON.stringify( users ), Url: $('#Dashboards-url').val() }, function(result) {
 
                                                                             var newObject = JSON.parse(result);
                                                                             console.log(newObject);
