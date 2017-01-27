@@ -2,13 +2,13 @@
                                                         <% var dashboardsObject = UserObject.frames.Dashboards; %>
 
                                                         <div class="form-group">
-                                                            <button id="saveBtn-Dashboards-Url" type="button" class="btn btn-success">Save</button>
-                                                            <label class="control-label col-md-3 col-sm-3 col-xs-12" for="Dashboards-url">URL </label>
+                                                            <button id="saveBtn-Dashboards-btn" type="button" class="btn btn-success">Save</button>
+                                                            <label class="control-label col-md-3 col-sm-3 col-xs-12" for="Dashboards-url-text">URL </label>
                                                             <div class="col-md-6 col-sm-6 col-xs-12">
-                                                                <input id="Dashboards-url" class="form-control col-md-7 col-xs-12" type="text" name="Dashboards-url" value="<%= dashboardsObject.url %>">
+                                                                <input id="Dashboards-url-text" class="form-control col-md-7 col-xs-12" type="text" name="Dashboards-url-text" value="<%= dashboardsObject.url %>">
                                                             </div>
                                                             <script>
-                                                            $('#saveBtn-Dashboards-Url').click(function() {
+                                                            $('#saveBtn-Dashboards-btn').click(function() {
                                                                 
                                                                 mongoSitesApi.auth_users()
                                                                     .then(function(users) {
@@ -35,7 +35,6 @@
                                                                                 });
                                                                         });
                                                                     });
-
                                                             });
                                                             </script>
                                                         </div>
