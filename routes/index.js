@@ -221,6 +221,8 @@ router.post('/formatter/initialSetup/:uid/', function(req, res, next) {
       }
     });
 
+    selectedUserObject.frames = {};
+
     selectedUserObject.frames['Event Monitor'] = adminUserObject.frames['Event Monitor'];
     selectedUserObject.frames['Jira'] = adminUserObject.frames['Jira'];
     selectedUserObject.frames['ServiceNow'] = adminUserObject.frames['ServiceNow'];
@@ -229,13 +231,12 @@ router.post('/formatter/initialSetup/:uid/', function(req, res, next) {
     var dashboardObject = {};
     dashboardObject['sub_links'] = [];
     dashboardObject['url'] = process.env.DEFAULT_DASHBOARD_URL
-
     selectedUserObject.frames['Dashboards'] = dashboardObject;
 
     res.send(JSON.stringify(selectedUserObject));
 });
 
-router.post('/formatter/change/:uid/DashboardUrl/', function(req, res, next) {
+router.post('/formatter/changeDashUrl/:uid/', function(req, res, next) {
 
     var allUsers = JSON.parse(req.body.allUsers);
     var selectedUserObject = {};
