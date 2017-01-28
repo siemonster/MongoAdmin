@@ -254,6 +254,57 @@ router.post('/formatter/changeDashUrl/:uid/', function(req, res, next) {
     res.send(JSON.stringify(selectedUserObject));
 });
 
+router.post('/formatter/setAdmin/:uid/', function(req, res, next) {
+
+  console.log(req.body.admin);
+    var allUsers = JSON.parse(req.body.allUsers);
+    var selectedUserObject = {};
+
+    _.each(allUsers, function(userObject) {
+
+      if(userObject['_id'] == req.params.uid) {
+
+        selectedUserObject = userObject;
+      }
+    });
+
+    if((req.body.admin == 'true') || (req.body.admin == true)){
+      
+      selectedUserObject.admin = true
+    }
+    else {
+
+      selectedUserObject.admin = false;
+    }
+
+    res.send(JSON.stringify(selectedUserObject));
+});
+
+router.post('/formatter/setActive/:uid/', function(req, res, next) {
+
+    var allUsers = JSON.parse(req.body.allUsers);
+    var selectedUserObject = {};
+
+    _.each(allUsers, function(userObject) {
+
+      if(userObject['_id'] == req.params.uid) {
+
+        selectedUserObject = userObject;
+      }
+    });
+
+    if((req.body.active == 'true') || (req.body.active == true)){
+      
+      selectedUserObject.active = true
+    }
+    else {
+
+      selectedUserObject.active = false;
+    }
+
+    res.send(JSON.stringify(selectedUserObject));
+});
+
 router.post('/formatter/change/:uid/Dashboards/:subLink', function(req, res, next) {
 
     var allUsers = JSON.parse(req.body.allUsers);
