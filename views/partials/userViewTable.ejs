@@ -17,19 +17,31 @@
 
                             $('#activeBtn').change(function() {
 
-                                mongoSitesApi.auth_update({_id: "<%= UserObject['_id'] %>", active: this.checked})
-                                    .then(function(data) {
+                                mongoSitesApi.auth_users()
+                                    .then(function(users) {
 
-                                        new PNotify({
-                                            title: 'Saved',
-                                            text: 'Successfully saved.',
-                                            type: 'success',
-                                            styling: 'bootstrap3'});
-                                    })
-                                    .catch(function(data) {
+                                        $.post("/formatter/setActive/<%= encodeURIComponent(UserObject['_id']) %>/", { allUsers: JSON.stringify( users ), active: $('#activeBtn').prop( "checked" ) }, function(result) {
 
-                                        console.log('b');
-                                        console.log(data);
+                                            var newObject = JSON.parse(result);
+
+                                            mongoSitesApi.auth_update(newObject)
+                                                .then(function(data) {
+
+                                                    loadUserData(function() {
+
+                                                        new PNotify({
+                                                            title: 'Saved',
+                                                            text: 'Successfully saved.',
+                                                            type: 'success',
+                                                            styling: 'bootstrap3'});
+                                                    });
+                                                })
+                                                .catch(function(data) {
+
+                                                    console.log('b');
+                                                    console.log(data);
+                                                });
+                                        });
                                     });
                             });
 
@@ -50,19 +62,31 @@
 
                             $('#adminBtn').change(function() {
 
-                                mongoSitesApi.auth_update({_id: "<%= UserObject['_id'] %>", admin: this.checked})
-                                    .then(function(data) {
+                                mongoSitesApi.auth_users()
+                                    .then(function(users) {
 
-                                        new PNotify({
-                                            title: 'Saved',
-                                            text: 'Successfully saved.',
-                                            type: 'success',
-                                            styling: 'bootstrap3'});
-                                    })
-                                    .catch(function(data) {
+                                        $.post("/formatter/setAdmin/<%= encodeURIComponent(UserObject['_id']) %>/", { allUsers: JSON.stringify( users ), admin: $('#adminBtn').prop( "checked" ) }, function(result) {
 
-                                        console.log('b');
-                                        console.log(data);
+                                            var newObject = JSON.parse(result);
+
+                                            mongoSitesApi.auth_update(newObject)
+                                                .then(function(data) {
+
+                                                    loadUserData(function() {
+
+                                                        new PNotify({
+                                                            title: 'Saved',
+                                                            text: 'Successfully saved.',
+                                                            type: 'success',
+                                                            styling: 'bootstrap3'});
+                                                    });
+                                                })
+                                                .catch(function(data) {
+
+                                                    console.log('b');
+                                                    console.log(data);
+                                                });
+                                        });
                                     });
                             });
 
