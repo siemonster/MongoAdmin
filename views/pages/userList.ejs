@@ -32,44 +32,49 @@
 
         function createUser(email, password) {
 
-          mongoSitesApi.auth_register({_id: email, password: password})
-                .then(function(result) {
+          checkLoginWithCallback(function(loggedIn) {
 
-                mongoSitesApi.auth_check()
-                    .then(function (logged_in) {
+              if(loggedIn) {
 
-                        if(logged_in) {
+                mongoSitesApi.auth_register({_id: email, password: password})
+                      .then(function(result) {
 
-                          var adminUserId = logged_in._id;
+                      mongoSitesApi.auth_check()
+                          .then(function (logged_in) {
 
-                          mongoSitesApi.auth_users()
-                            .then(function(users) {
+                              if(logged_in) {
 
-                              $.post("/formatter/initialSetup/" + encodeURIComponent(email) + "/", { allUsers: JSON.stringify( users ), admin: logged_in._id }, function(result) {
+                                var adminUserId = logged_in._id;
 
-                                  var newObject = JSON.parse(result);
+                                mongoSitesApi.auth_users()
+                                  .then(function(users) {
 
-                                  mongoSitesApi.auth_update(newObject)
-                                      .then(function(data) {
+                                    $.post("/formatter/initialSetup/" + encodeURIComponent(email) + "/", { allUsers: JSON.stringify( users ), admin: logged_in._id }, function(result) {
 
-                                          window.location.href = "/collection/users/" + encodeURIComponent(email);
-                                      })
-                                      .catch(function(data) {
+                                        var newObject = JSON.parse(result);
 
-                                          console.log('b');
-                                          console.log(data);
-                                      });
+                                        mongoSitesApi.auth_update(newObject)
+                                            .then(function(data) {
 
-                              });
-                            });
-                        }
-                    });
-                })
-                .catch(function(error) {
+                                                window.location.href = "/collection/users/" + encodeURIComponent(email);
+                                            })
+                                            .catch(function(data) {
 
-                  console.log('b');
-                  console.log(error);
-                });
+                                                console.log('b');
+                                                console.log(data);
+                                            });
+
+                                    });
+                                  });
+                              }
+                          });
+                      })
+                      .catch(function(error) {
+
+                        console.log(error);
+                      });
+              }
+          })
         }
 
     </script>
