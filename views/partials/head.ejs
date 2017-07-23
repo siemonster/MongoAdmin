@@ -45,16 +45,22 @@
 
     function checkLogin() {
 
+        checkLoginWithCallback(function(loggedIn) {
+
+            if(loggedIn == false) {
+
+                window.location.href = "/login";
+            }
+        })
+    }
+
+    function checkLoginWithCallback(cb) {
+
         mongoSitesApi.auth_check()
-            .then(function (logged_in) {
+            .then(function(logged_in) {
 
-                if(!logged_in) {
-
-                    window.location.href = "/login";
-                }
-
-                console.log(logged_in);
-            });
+                cb(logged_in)
+            })
     }
 
     function loadUserName(cb) {
