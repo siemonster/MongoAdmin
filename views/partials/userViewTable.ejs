@@ -731,16 +731,22 @@
 
                                 $('#deleteBtn').click(function() {
 
-                                    mongoSitesApi.auth_delete("<%= UserObject['_id'] %>")
-                                        .then(function(data){          
+                                    checkLoginWithCallback(function(loggedIn) {
 
-                                            window.location.href = "/collection/users/";
-                                        })
-                                        .catch(function(data) {
+                                        if(loggedIn) {
 
-                                            console.log('b');
-                                            console.log(data);                  
-                                        });
+                                            mongoSitesApi.auth_delete("<%= UserObject['_id'] %>")
+                                                .then(function(data){          
+
+                                                    window.location.href = "/collection/users/";
+                                                })
+                                                .catch(function(data) {
+
+                                                    console.log('b');
+                                                    console.log(data);                  
+                                                });
+                                        }
+                                    });
                                 });
 
                                 </script>
